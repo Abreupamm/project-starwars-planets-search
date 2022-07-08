@@ -1,5 +1,7 @@
 body {
   margin: 0;
+  background-image: url('https://media.istockphoto.com/photos/night-sky-with-great-bear-picture-id489805050?b=1&k=20&m=489805050&s=170667a&w=0&h=g78xwYXTh9oWAd5VjhMppR3fCX3RDrpNKwt9Qqsglbc=');
+  color: white;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
