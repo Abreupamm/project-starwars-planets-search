@@ -6,7 +6,7 @@ const useImageVisible = (callback, time) => {
     setTimeout(() => {
       callback(false);
     }, time);
-  }, []);
+  });
 };
 
 export default useImageVisible;
