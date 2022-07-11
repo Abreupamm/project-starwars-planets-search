@@ -1,8 +1,20 @@
-const getPlanets = async () => {
+import { useEffect, useState } from 'react';
+
+const usePlanetsList = () => {
+  const [data, setData] = useState([]);
+
   const URL = 'https://swapi-trybe.herokuapp.com/api/planets/';
-  const req = await fetch(URL);
-  const response = await req.json();
-  return response.results;
+  useEffect(() => {
+    const getPlanets = async () => {
+      const req = await fetch(URL);
+      const required = await req.json();
+      const result = required.results;
+      result.map((planet) => (delete (planet.residents)));
+      setData(result);
+    };
+    getPlanets();
+  }, []);
+  return data;
 };
 
-export default getPlanets;
+export default usePlanetsList;
