@@ -4,6 +4,7 @@ import Table from './components/Table';
 import image from './projectIntro.gif';
 import useImageVisible from './Effects/Hoocks';
 import StarWarsProvider from './context/StarwarsProvider';
+import InputFilter from './components/InputFilter';
 
 function App() {
   const [imgVisible, setImgVisible] = useState(true);
@@ -18,6 +19,7 @@ function App() {
 
   return (
     <StarWarsProvider>
+      <InputFilter />
       <Table />
     </StarWarsProvider>
   );
