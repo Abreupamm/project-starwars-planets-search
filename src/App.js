@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Table from './components/Table';
 import image from './projectIntro.gif';
-import useImageVisible from './Effects/Hoocks';
+import { useImageVisible } from './Effects/Hoocks';
 import StarWarsProvider from './context/StarwarsProvider';
 import InputFilter from './components/InputFilter';
 

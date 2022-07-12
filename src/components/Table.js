@@ -1,8 +1,13 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import starWarsContext from '../context/ContextAPI';
+import { usePlanetsFilter } from '../Effects/Hoocks';
 
 function Table() {
   const { data } = useContext(starWarsContext);
+
+  const [planets, setPlanets] = useState(data);
+  usePlanetsFilter(setPlanets, planets);
+
   return (
 
     <table>
@@ -24,13 +29,15 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {data.map((planet, index) => (
-          <tr key={ index }>
-            { Object.values(planet).map(
-              (item, index2) => <td key={ index2 }>{ item }</td>,
-            ) }
-          </tr>
-        ))}
+        {
+          planets.map((planet, index) => (
+            <tr key={ index }>
+              { Object.values(planet).map(
+                (item, index2) => <td key={ index2 }>{ item }</td>,
+              ) }
+            </tr>
+          ))
+        }
       </tbody>
     </table>
 
