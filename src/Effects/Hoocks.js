@@ -9,13 +9,12 @@ export const useImageVisible = (callback, time) => {
   });
 };
 
-export const usePlanetsFilter = (callback, state) => {
+export const usePlanetsFilter = (callback) => {
   const { data, filterByName: { name } } = useContext(starWarsContext);
   useEffect(() => {
-    if (name !== '') {
-      callback(data.filter((planet) => (planet.name.includes(name))));
-    } else {
-      callback(data);
+    if (name === '') {
+      return callback(data);
     }
-  }, state);
+    return callback(data.filter((planet) => (planet.name.includes(name))));
+  }, [data, name, callback]);
 };

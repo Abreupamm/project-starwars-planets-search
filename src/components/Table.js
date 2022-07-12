@@ -6,10 +6,10 @@ function Table() {
   const { data } = useContext(starWarsContext);
 
   const [planets, setPlanets] = useState(data);
-  usePlanetsFilter(setPlanets, planets);
+
+  usePlanetsFilter(setPlanets);
 
   return (
-
     <table>
       <thead>
         <tr>
