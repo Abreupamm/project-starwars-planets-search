@@ -5,6 +5,11 @@ import usePlanetsList from '../fetchAPI/fetchPlanets';
 
 function StarWarsProvider({ children }) {
   const [filterByName, setFilterByName] = useState({ name: '' });
+  const [filterByNumericValues, setFilterByNumericValues] = useState([{
+    column: '',
+    comparison: '',
+    value: '',
+  }]);
 
   const data = usePlanetsList();
 
@@ -12,8 +17,20 @@ function StarWarsProvider({ children }) {
     setFilterByName({ name: filter });
   }
 
+  function addFilterByNumericValues(obj) {
+    setFilterByNumericValues(obj);
+  }
+
   return (
-    <starWarsContext.Provider value={ { data, filterByName, addFilterByName } }>
+    <starWarsContext.Provider
+      value={
+        { data,
+          filterByName,
+          addFilterByName,
+          filterByNumericValues,
+          addFilterByNumericValues }
+      }
+    >
       {children}
     </starWarsContext.Provider>
   );
