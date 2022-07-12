@@ -1,21 +1,23 @@
 import React from 'react';
+import { columns, comparison } from '../data';
 
 function InputFilterNumber() {
   return (
     <div>
+      <span form="column">coluna</span>
       <select data-testid="column-filter">
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
+        {columns.map((column, index) => (
+          <option key={ index } name={ column }>{column}</option>))}
       </select>
+
+      <span form="comparison">Operador</span>
       <select data-testid="comparison-filter">
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
+        {comparison.map((item, index) => (
+          <option key={ index } name={ item }>{item}</option>))}
       </select>
+
       <input type="number" data-testid="value-filter" />
+
       <button data-testid="button-filter" type="button">Filtrar</button>
     </div>
   );
