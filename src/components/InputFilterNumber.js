@@ -1,37 +1,47 @@
-import React, { useState } from 'react';
-// import starWarsContext from '../context/ContextAPI';
-import { columns, comparison } from '../data';
+import React, { useContext, useState } from 'react';
+import starWarsContext from '../context/ContextAPI';
+import { columns, comparisons } from '../data/filterByNumber';
 
 function InputFilterNumber() {
-  const [newColumn, setNewColumn] = useState({ column: 'population' });
-  const [newComparison, setNewComparison] = useState({ comparison: 'maior que' });
-  const [newValue, setNewValue] = useState({ value: '' });
+  const { addFilterByNumericValues } = useContext(starWarsContext);
+
+  const [column, setNewColumn] = useState('population');
+
+  const [comparison, setNewComparison] = useState('maior que');
+
+  const [newValue, setNewValue] = useState('');
 
   const handleOnClick = ({ target: { value, name } }) => {
     if (name === 'column') {
-      return setNewColumn({ column: value });
+      return setNewColumn(value);
     }
-    return setNewComparison({ comparison: value });
+    return setNewComparison(value);
   };
-  console.log(newColumn);
-  console.log(newComparison);
 
   const handleOnChange = ({ target: { value } }) => {
-    setNewValue({ value });
+    setNewValue(value);
   };
-  console.log(newValue);
+
+  const handleOnClickButton = () => {
+    const state = [{
+      column,
+      comparison,
+      value: newValue,
+    }];
+    addFilterByNumericValues(state);
+  };
 
   return (
     <div>
       <span form="column">coluna</span>
       <select name="column" onClick={ handleOnClick } data-testid="column-filter">
-        {columns.map((column, index) => (
-          <option key={ index }>{column}</option>))}
+        {columns.map((item, index) => (
+          <option key={ index }>{item}</option>))}
       </select>
 
       <span form="comparison">Operador</span>
       <select onClick={ handleOnClick } data-testid="comparison-filter">
-        {comparison.map((item, index) => (
+        {comparisons.map((item, index) => (
           <option key={ index }>{item}</option>))}
       </select>
 
@@ -42,7 +52,13 @@ function InputFilterNumber() {
         data-testid="value-filter"
       />
 
-      <button data-testid="button-filter" type="button">Filtrar</button>
+      <button
+        onClick={ handleOnClickButton }
+        data-testid="button-filter"
+        type="button"
+      >
+        Filtrar
+      </button>
     </div>
   );
 }

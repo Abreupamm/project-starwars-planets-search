@@ -5,7 +5,7 @@ export const columns = [
   'rotation_period',
   'surface_water'];
 
-export const comparison = [
+export const comparisons = [
   'maior que',
   'menor que',
   'igual a',
