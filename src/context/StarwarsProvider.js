@@ -17,8 +17,10 @@ function StarWarsProvider({ children }) {
     setFilterByName({ name: filter });
   }
 
-  function addFilterByNumericValues(obj) {
-    setFilterByNumericValues(obj);
+  function addFilterByNumericValues(chave, valor) {
+    setFilterByNumericValues({ ...filterByNumericValues,
+      [chave]: valor,
+    });
   }
 
   return (
