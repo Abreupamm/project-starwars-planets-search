@@ -25,15 +25,15 @@ export const usePlanetsFilter = (callback) => {
       switch (obj.comparison) {
       case 'maior que':
         return callback(data.filter((planet) => (
-          planet[obj.column] > obj.value
+          parseFloat(planet[obj.column]) > parseFloat(obj.value)
         )));
       case 'menor que':
         return callback(data.filter((planet) => (
-          planet[obj.column] < obj.value
+          parseFloat(planet[obj.column]) < parseFloat(obj.value)
         )));
       case 'igual a':
         return console.log(callback(data.filter((planet) => (
-          planet[obj.column] === obj.value
+          parseFloat(planet[obj.column]) === parseFloat(obj.value)
         ))));
 
       default:

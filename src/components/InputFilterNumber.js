@@ -50,6 +50,7 @@ function InputFilterNumber() {
         onChange={ handleOnChange }
         type="number"
         data-testid="value-filter"
+        value={ newValue }
       />
 
       <button
