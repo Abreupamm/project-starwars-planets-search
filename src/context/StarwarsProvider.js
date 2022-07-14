@@ -6,9 +6,9 @@ import usePlanetsList from '../fetchAPI/fetchPlanets';
 function StarWarsProvider({ children }) {
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([{
-    column: '',
-    comparison: '',
-    value: '',
+    column: 'population',
+    comparison: 'maior que',
+    value: '0',
   }]);
 
   const data = usePlanetsList();

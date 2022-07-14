@@ -9,7 +9,7 @@ function InputFilterNumber() {
 
   const [comparison, setNewComparison] = useState('maior que');
 
-  const [newValue, setNewValue] = useState('');
+  const [newValue, setNewValue] = useState('0');
 
   const handleOnClick = ({ target: { value, name } }) => {
     if (name === 'column') {

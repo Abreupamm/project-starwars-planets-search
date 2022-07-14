@@ -10,7 +10,7 @@ import InputFilterNumber from './components/InputFilterNumber';
 function App() {
   const [imgVisible, setImgVisible] = useState(true);
 
-  const SEVEN_TIME = 10010;
+  const SEVEN_TIME = 1000;
 
   useImageVisible(setImgVisible, SEVEN_TIME);
 

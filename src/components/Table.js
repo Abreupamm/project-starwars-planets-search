@@ -1,11 +1,9 @@
-import React, { useContext, useState } from 'react';
-import starWarsContext from '../context/ContextAPI';
+import React, { useState } from 'react';
+
 import { usePlanetsFilter } from '../Effects/Hoocks';
 
 function Table() {
-  const { data } = useContext(starWarsContext);
-
-  const [planets, setPlanets] = useState(data);
+  const [planets, setPlanets] = useState([]);
 
   usePlanetsFilter(setPlanets);
 
