@@ -51,5 +51,5 @@ export const usePlanetsFilter = (callback, state) => {
     default:
       return 'Filtro vazio';
     }
-  }, [filterByNumericValues, callback, data, numeric]);
+  }, [filterByNumericValues, callback, data, numeric, filter]);
 };
