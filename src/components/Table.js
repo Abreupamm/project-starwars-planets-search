@@ -9,14 +9,6 @@ function Table() {
 
   usePlanetsFilter(setPlanets, planets);
 
-  // function filterByNumber() {
-  //   const index = filterByNumericValues.length - 1;
-  //   console.log(index);
-  //   const numeric = filterByNumericValues[index];
-
-  // if (filterByNumericValues[0].column !== '') {
-  //   filterByNumber();
-  // }
   return (
     <table>
       <thead>

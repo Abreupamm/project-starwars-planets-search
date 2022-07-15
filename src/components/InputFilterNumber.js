@@ -12,15 +12,17 @@ function InputFilterNumber() {
 
   const [newValue, setNewValue] = useState('0');
 
-  const handleOnClick = ({ target: { value, name } }) => {
-    if (name === 'column') {
-      return setNewColumn(value);
-    }
-    return setNewComparison(value);
-  };
-
-  const handleOnChange = ({ target: { value } }) => {
+  const handleOnChange = ({ target: { value, name } }) => {
     setNewValue(value);
+    if (name === 'column') {
+      setNewColumn(value);
+    }
+    if (name === 'comparison') {
+      setNewComparison(value);
+    }
+    if (name === 'value') {
+      setNewValue(value);
+    }
   };
 
   const handleOnClickButton = () => {
@@ -35,13 +37,21 @@ function InputFilterNumber() {
   return (
     <div>
       <span form="column">coluna</span>
-      <select name="column" onClick={ handleOnClick } data-testid="column-filter">
+      <select
+        name="column"
+        onChange={ handleOnChange }
+        data-testid="column-filter"
+      >
         {columns.map((item, index) => (
           <option key={ index }>{item}</option>))}
       </select>
 
       <span form="comparison">Operador</span>
-      <select onClick={ handleOnClick } data-testid="comparison-filter">
+      <select
+        name="comparison"
+        onChange={ handleOnChange }
+        data-testid="comparison-filter"
+      >
         {comparisons.map((item, index) => (
           <option key={ index }>{item}</option>))}
       </select>

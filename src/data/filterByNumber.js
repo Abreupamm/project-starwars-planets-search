@@ -1,7 +1,7 @@
 export const columns = [
   'population',
   'orbital_period',
-  ' diameter',
+  'diameter',
   'rotation_period',
   'surface_water'];
 
