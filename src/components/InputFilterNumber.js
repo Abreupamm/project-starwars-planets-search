@@ -5,6 +5,7 @@ import { columns, comparisons } from '../data/filterByNumber';
 
 function InputFilterNumber() {
   const { addFilterByNumericValues } = useContext(starWarsContext);
+  const [columnsFilters, setColumnsFilters] = useState(columns);
 
   const [column, setNewColumn] = useState('population');
 
@@ -13,7 +14,6 @@ function InputFilterNumber() {
   const [newValue, setNewValue] = useState('0');
 
   const handleOnChange = ({ target: { value, name } }) => {
-    setNewValue(value);
     if (name === 'column') {
       setNewColumn(value);
     }
@@ -31,6 +31,7 @@ function InputFilterNumber() {
       comparison,
       value: newValue,
     };
+    setColumnsFilters(columnsFilters.filter((item) => item !== state.column));
     addFilterByNumericValues(state);
   };
 
@@ -42,7 +43,7 @@ function InputFilterNumber() {
         onChange={ handleOnChange }
         data-testid="column-filter"
       >
-        {columns.map((item, index) => (
+        {columnsFilters.map((item, index) => (
           <option key={ index }>{item}</option>))}
       </select>
 
