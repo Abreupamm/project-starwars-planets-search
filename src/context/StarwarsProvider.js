@@ -11,6 +11,8 @@ function StarWarsProvider({ children }) {
     value: '',
   }]);
 
+  // const [filtersNumbers, setFiltersNumbers] = useState([]);
+
   const data = usePlanetsList();
 
   function addFilterByName(filter) {
@@ -18,8 +20,15 @@ function StarWarsProvider({ children }) {
   }
 
   function addFilterByNumericValues(filterValues) {
-    setFilterByNumericValues(filterValues);
+    if (filterByNumericValues[0].column !== '') {
+      return setFilterByNumericValues([...filterByNumericValues, filterValues]);
+    }
+    return setFilterByNumericValues([filterValues]);
   }
+
+  // function addFiltersNumber(filters) {
+  //   setFiltersNumbers(filters);
+  // }
 
   return (
     <starWarsContext.Provider

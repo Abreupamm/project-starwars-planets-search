@@ -9,7 +9,7 @@ export const useImageVisible = (callback, time) => {
   });
 };
 
-export const usePlanetsFilter = (callback) => {
+export const usePlanetsFilter = (callback, state) => {
   const {
     data,
     filterByName: { name },
@@ -20,25 +20,36 @@ export const usePlanetsFilter = (callback) => {
     if (name !== '') {
       return callback(data.filter((planet) => (planet.name.includes(name))));
     }
+    return callback(data);
+  }, [data, name, callback]);
 
-    filterByNumericValues.forEach((obj) => {
-      switch (obj.comparison) {
-      case 'maior que':
-        return callback(data.filter((planet) => (
-          parseFloat(planet[obj.column]) > parseFloat(obj.value)
-        )));
-      case 'menor que':
-        return callback(data.filter((planet) => (
-          parseFloat(planet[obj.column]) < parseFloat(obj.value)
-        )));
-      case 'igual a':
-        return console.log(callback(data.filter((planet) => (
-          parseFloat(planet[obj.column]) === parseFloat(obj.value)
-        ))));
+  const index = filterByNumericValues.length - 1;
 
-      default:
-        return callback(data);
-      }
-    });
-  }, [data, name, callback, filterByNumericValues]);
+  const numeric = filterByNumericValues[index];
+
+  const filter = state;
+  useEffect(() => {
+    switch (numeric.comparison) {
+    case 'maior que':
+      return callback(filter.filter((planet) => (
+        parseFloat(
+          planet[numeric.column],
+        ) > parseFloat(numeric.value)
+      )));
+    case 'menor que':
+      return callback(filter.filter((planet) => (
+        parseFloat(
+          planet[numeric.column],
+        ) < parseFloat(numeric.value)
+      )));
+    case 'igual a':
+      return callback(filter.filter((planet) => (
+        parseFloat(
+          planet[numeric.column],
+        ) === parseFloat(numeric.value)
+      )));
+    default:
+      return 'Filtro vazio';
+    }
+  }, [filterByNumericValues, callback, data, numeric]);
 };

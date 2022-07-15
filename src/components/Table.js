@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import starWarsContext from '../context/ContextAPI';
 
 import { usePlanetsFilter } from '../Effects/Hoocks';
 
 function Table() {
-  const [planets, setPlanets] = useState([]);
+  const { data } = useContext(starWarsContext);
+  const [planets, setPlanets] = useState(data);
 
-  usePlanetsFilter(setPlanets);
+  usePlanetsFilter(setPlanets, planets);
 
+  // function filterByNumber() {
+  //   const index = filterByNumericValues.length - 1;
+  //   console.log(index);
+  //   const numeric = filterByNumericValues[index];
+
+  // if (filterByNumericValues[0].column !== '') {
+  //   filterByNumber();
+  // }
   return (
     <table>
       <thead>

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import starWarsContext from '../context/ContextAPI';
+
 import { columns, comparisons } from '../data/filterByNumber';
 
 function InputFilterNumber() {
@@ -23,11 +24,11 @@ function InputFilterNumber() {
   };
 
   const handleOnClickButton = () => {
-    const state = [{
+    const state = {
       column,
       comparison,
       value: newValue,
-    }];
+    };
     addFilterByNumericValues(state);
   };
 
