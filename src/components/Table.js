@@ -31,7 +31,7 @@ function Table() {
       <tbody>
         {
           planets.map((planet, index) => (
-            <tr key={ index }>
+            <tr data-testide="planeta" key={ index }>
               { Object.values(planet).map(
                 (item, index2) => <td key={ index2 }>{ item }</td>,
               ) }

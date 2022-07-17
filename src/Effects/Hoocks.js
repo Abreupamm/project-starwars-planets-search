@@ -21,7 +21,7 @@ export const usePlanetsFilter = (callback, state) => {
       return callback(data.filter((planet) => (planet.name.includes(name))));
     }
     return callback(data);
-  }, [data, name, callback]);
+  }, [data, name, callback, filterByNumericValues]);
 
   const index = filterByNumericValues.length - 1;
 
@@ -51,5 +51,15 @@ export const usePlanetsFilter = (callback, state) => {
     default:
       return 'Filtro vazio';
     }
-  }, [filterByNumericValues, callback, data, numeric, filter]);
+  }, [filterByNumericValues, callback, data, numeric]);
+};
+
+export const useRemoveFiltersValus = (callback) => {
+  const { filterByNumericValues } = useContext(starWarsContext);
+  useEffect(() => callback(filterByNumericValues), [callback, filterByNumericValues]);
+};
+
+export const useColumnsName = (callback) => {
+  const { columnName } = useContext(starWarsContext);
+  useEffect(() => callback(columnName), [callback, columnName]);
 };

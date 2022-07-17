@@ -1,11 +1,14 @@
 import React, { useContext, useState } from 'react';
 import starWarsContext from '../context/ContextAPI';
 
-import { columns, comparisons } from '../data/filterByNumber';
+import { comparisons } from '../data/filterByNumber';
 
 function InputFilterNumber() {
-  const { addFilterByNumericValues } = useContext(starWarsContext);
-  const [columnsFilters, setColumnsFilters] = useState(columns);
+  const {
+    addFilterByNumericValues,
+    columnName,
+    removeColumnNamne,
+    removeFilterByNumericValues } = useContext(starWarsContext);
 
   const [column, setNewColumn] = useState('population');
 
@@ -31,11 +34,22 @@ function InputFilterNumber() {
       comparison,
       value: newValue,
     };
-    setColumnsFilters(columnsFilters.filter((item) => item !== state.column));
+    removeColumnNamne(column);
     addFilterByNumericValues(state);
   };
 
+  const handleOnClickRemoveFilters = () => {
+    removeFilterByNumericValues([
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ]);
+  };
+
   return (
+
     <div>
       <span form="column">coluna</span>
       <select
@@ -43,7 +57,7 @@ function InputFilterNumber() {
         onChange={ handleOnChange }
         data-testid="column-filter"
       >
-        {columnsFilters.map((item, index) => (
+        {columnName.map((item, index) => (
           <option key={ index }>{item}</option>))}
       </select>
 
@@ -72,7 +86,16 @@ function InputFilterNumber() {
       >
         Filtrar
       </button>
+
+      <button
+        onClick={ handleOnClickRemoveFilters }
+        data-testid="button-remove-filters"
+        type="button"
+      >
+        Remover Filtros
+      </button>
     </div>
+
   );
 }
 
