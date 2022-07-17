@@ -43,14 +43,28 @@ describe("testa a tabela", () => {
     const elementComparison = screen.getByTestId("comparison-filter");
     const elementValue = screen.getByTestId("value-filter");
     const elementButton = screen.getByTestId("button-filter");
-
+    
     userEvent.selectOptions(elementComparison, ["igual a"]);
     userEvent.type(elementValue, "200000");
     userEvent.click(elementButton);
-
+    
     const planetTatooine = screen.getByRole("cell", { name: "Tatooine" });
-
+    
     expect(screen.getAllByRole("row")).toHaveLength(2);
     expect(planetTatooine).toBeInTheDocument();
+    const elementFilter = screen.getByTestId("filter")
+    expect(elementFilter).toBeInTheDocument();
+  });
+  test('Verifica se a tabela possui a coluna Diameter', ()=>{
+    const elementPlanet= screen.getAllByText(/Diameter/i);
+    expect(elementPlanet).toHaveLength(2);
+    
+  });
+
+  test('Verifica botão de remover todos os filtros', ()=>{
+    const elementButtonRemove = screen.getByTestId("button-remove-filters");
+    userEvent.click(elementButtonRemove);
+    const elementPlanetsList = screen.getAllByRole('cell');
+    expect(elementPlanetsList).toHaveLength(130);
   });
 });

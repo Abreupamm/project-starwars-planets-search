@@ -31,16 +31,16 @@ function AddedFilters() {
             <span data-testid="filter" className="filter">
               {`${item.column} ${item.comparison} ${item.value} `}
               {' '}
-              <button
-                name={ item.column }
-                onClick={ handleOnClickRemoveFilter }
-                className="button-remove"
-                type="button"
-              >
-                <img name={ item.column } className="img-remove" src="https://cdn-icons-png.flaticon.com/128/6932/6932392.png" alt="icon-remove" />
-
-              </button>
             </span>
+            <button
+              name={ item.column }
+              onClick={ handleOnClickRemoveFilter }
+              className="button-remove"
+              type="button"
+            >
+              <img name={ item.column } className="img-remove" src="https://cdn-icons-png.flaticon.com/128/6932/6932392.png" alt="icon-remove" />
+
+            </button>
           </div>
         ))}
       </div>
