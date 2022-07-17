@@ -1,17 +1,17 @@
 .button-remove {
   background-color: black;
   border: transparent;
-  width: 30px;
   height: 30px;
+  width: 30px;
 }
 
 .img-remove {
-  width: 30px;
   height: 30px;
+  width: 30px;
 }
 
 .filter {
-  display: flex;
   align-items: center;
+  display: flex;
   margin: 10px;
 }

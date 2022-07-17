@@ -1,43 +1,56 @@
 import React from "react";
-import { render, screen, wait } from "@testing-library/react"; // highlight-line
-// import "jest-dom/extend-expect";
-// import testData from "../../cypress/mocks/testData";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import App from "../App";
+import fetchPlanetsMock from "./mock/mockPlanets";
 
-jest.mock("../../cypress/mocks/testData");
+jest.useFakeTimers();
 
-// test('if planets are being fetched', async () => {
-//   render(<App />);
-//   const alderaan = await screen.findByText('Alderaan')
-//   expect(alderaan).toBeInTheDocument();
-// });
-jest.useFakeTimers(20000);
-test("if typing on name filter planets are being filtered", async () => {
-  render(<App />);
+describe("testa a tabela", () => {
+  beforeEach(() => {
+    jest
+      .spyOn(global, "fetch")
+      .mockResolvedValue({ json: async () => fetchPlanetsMock });
+    render(<App />);
+  });
 
-  const tatooine = await screen.findByText("Tatooine");
+  afterEach(() => {
+    global.fetch.mockRestore();
+  });
 
-  // const nameFilter = screen.getByTestId('name-filter');
-  // userEvent.type(nameFilter, 'tatooine');
+  test("Verifica se os planetas são renderizados", async () => {
+    await waitFor(() => {
+      const { results } = fetchPlanetsMock;
+      const planetsName = results.map(({ name }) => name);
 
-  expect(tatooine).toBeInTheDocument();
+      planetsName.forEach(
+        (name) => {
+          const planet = screen.getByText(name);
+          expect(planet).toBeInTheDocument();
+        },
+        { timeout: 20000 }
+      );
+    });
+  });
+
+  test("Verifica filtro por nome", () => {
+    const elementNameFilter = screen.getByTestId("name-filter");
+    userEvent.type(elementNameFilter, "Tatooine");
+    expect(elementNameFilter).toHaveValue("Tatooine");
+  });
+
+  test("Verifica filtro numérico", () => {
+    const elementComparison = screen.getByTestId("comparison-filter");
+    const elementValue = screen.getByTestId("value-filter");
+    const elementButton = screen.getByTestId("button-filter");
+
+    userEvent.selectOptions(elementComparison, ["igual a"]);
+    userEvent.type(elementValue, "200000");
+    userEvent.click(elementButton);
+
+    const planetTatooine = screen.getByRole("cell", { name: "Tatooine" });
+
+    expect(screen.getAllByRole("row")).toHaveLength(2);
+    expect(planetTatooine).toBeInTheDocument();
+  });
 });
-
-// test('if numerical filters are being used', async () => {
-//   render(<App />);
-//   const columnFilter = screen.getByTestId('column-filter');
-//   const comparison = screen.getByTestId('comparison-filter');
-//   const valueFilter = screen.getByTestId('value-filter');
-//   const toggleFilterBtn = screen.getByTestId('button-filter');
-//   const tatooine = await screen.findByText('Tatooine');
-//   const hoth = await screen.findByText('Hoth');
-//   expect(tatooine).toBeInTheDocument();
-//   userEvent.selectOptions(columnFilter, 'diameter');
-//   userEvent.selectOptions(comparison, 'igual a');
-//   userEvent.type(valueFilter, '7200');
-//   userEvent.click(toggleFilterBtn);
-//   expect(tatooine).not.toBeInTheDocument();
-//   expect(hoth).toBeInTheDocument();
-//   const filterVisible = screen.getByTestId('filter');
-//   expect(filterVisible).toBeVisible();
-// })
