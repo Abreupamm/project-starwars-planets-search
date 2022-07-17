@@ -14,50 +14,51 @@ export const usePlanetsFilter = (callback, state) => {
     data,
     filterByName: { name },
     filterByNumericValues,
+    removeFilter,
   } = useContext(starWarsContext);
 
   useEffect(() => {
     if (name !== '') {
       return callback(data.filter((planet) => (planet.name.includes(name))));
     }
-    // return callback(data);
+    return callback(data);
   }, [data, name, callback]);
 
-  // const index = filterByNumericValues.length - 1;
-
-  // const numeric = filterByNumericValues[index];
-
-  const filterState = state;
+  let filterState = state;
+  if (removeFilter === true && filterByNumericValues[0].column !== '') {
+    filterState = data;
+  }
 
   useEffect(() => {
-    if (filterByNumericValues[0].column !== '') {
-      const planetsFilterList = filterByNumericValues.map((planet) => {
-        if (planet.comparison === 'maior que') {
-          return filterState.filter((item) => (
-            parseFloat(
-              item[planet.column],
-            ) > parseFloat(planet.value)
-          ));
-        }
-        if (planet.comparison === 'menor que') {
-          return filterState.filter((item) => (
-            parseFloat(
-              item[planet.column],
-            ) < parseFloat(planet.value)
-          ));
-        }
+    if (filterByNumericValues[0].column === '') {
+      return callback(data);
+    }
+    const planetsFilterList = filterByNumericValues.map((planet) => {
+      if (planet.comparison === 'maior que') {
         return filterState.filter((item) => (
           parseFloat(
             item[planet.column],
-          ) === parseFloat(planet.value)
+          ) > parseFloat(planet.value)
         ));
-      });
-      return callback(planetsFilterList[planetsFilterList.length - 1]);
-    }
-    return callback(data);
+      }
+      if (planet.comparison === 'menor que') {
+        return filterState.filter((item) => (
+          parseFloat(
+            item[planet.column],
+          ) < parseFloat(planet.value)
+        ));
+      }
+      return filterState.filter((item) => (
+        parseFloat(
+          item[planet.column],
+        ) === parseFloat(planet.value)
+      ));
+    });
+    return callback(planetsFilterList[planetsFilterList.length - 1]);
   },
-  [callback, data, filterByNumericValues, filterByNumericValues.length]);
+  [callback, data, filterByNumericValues]);
 };
+
 export const useRemoveFiltersValus = (callback) => {
   const { filterByNumericValues } = useContext(starWarsContext);
   useEffect(() => callback(filterByNumericValues), [callback, filterByNumericValues]);

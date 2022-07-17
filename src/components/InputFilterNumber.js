@@ -8,7 +8,8 @@ function InputFilterNumber() {
     addFilterByNumericValues,
     columnName,
     removeColumnNamne,
-    removeFilterByNumericValues } = useContext(starWarsContext);
+    removeAll,
+    addRemoveFilter } = useContext(starWarsContext);
 
   const [column, setNewColumn] = useState('population');
 
@@ -34,18 +35,14 @@ function InputFilterNumber() {
       comparison,
       value: newValue,
     };
+    addRemoveFilter(false);
     removeColumnNamne(column);
     addFilterByNumericValues(state);
   };
 
   const handleOnClickRemoveFilters = () => {
-    removeFilterByNumericValues([
-      {
-        column: '',
-        comparison: '',
-        value: '',
-      },
-    ]);
+    addRemoveFilter(true);
+    removeAll();
   };
 
   return (

@@ -6,6 +6,7 @@ import { columns } from '../data/filterByNumber';
 
 function StarWarsProvider({ children }) {
   const [columnName, setColumnName] = useState(columns);
+  const [removeFilter, setRemoveFilter] = useState(false);
   const [filterByName, setFilterByName] = useState({ name: '' });
   const [filterByNumericValues, setFilterByNumericValues] = useState([
     {
@@ -28,17 +29,27 @@ function StarWarsProvider({ children }) {
     return setFilterByNumericValues([filterValues]);
   }
 
-  function removeFilterByNumericValues(filterValues) {
-    if (filterByNumericValues.length === 1) {
-      return setFilterByNumericValues([
-        {
-          column: '',
-          comparison: '',
-          value: '',
-        },
-      ]);
+  function removeAll() {
+    return setFilterByNumericValues([
+      {
+        column: '',
+        comparison: '',
+        value: '',
+      },
+    ]);
+  }
+
+  function removeFilterByNumericValues(name) {
+    if (filterByNumericValues.length > 1) {
+      return setFilterByNumericValues(
+        filterByNumericValues.filter((item) => item.column !== name),
+      );
     }
-    return setFilterByNumericValues(filterValues);
+    return removeAll();
+  }
+
+  function addRemoveFilter(info) {
+    setRemoveFilter(info);
   }
 
   const addColumnNamne = (name) => setColumnName([...columnName, name]);
@@ -64,6 +75,9 @@ function StarWarsProvider({ children }) {
         columnName,
         addColumnNamne,
         removeColumnNamne,
+        removeFilter,
+        addRemoveFilter,
+        removeAll,
       } }
     >
       {children}
