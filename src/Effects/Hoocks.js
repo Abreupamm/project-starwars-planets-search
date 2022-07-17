@@ -20,40 +20,44 @@ export const usePlanetsFilter = (callback, state) => {
     if (name !== '') {
       return callback(data.filter((planet) => (planet.name.includes(name))));
     }
-    return callback(data);
-  }, [data, name, callback, filterByNumericValues]);
+    // return callback(data);
+  }, [data, name, callback]);
 
-  const index = filterByNumericValues.length - 1;
+  // const index = filterByNumericValues.length - 1;
 
-  const numeric = filterByNumericValues[index];
+  // const numeric = filterByNumericValues[index];
 
-  const filter = state;
+  const filterState = state;
+
   useEffect(() => {
-    switch (numeric.comparison) {
-    case 'maior que':
-      return callback(filter.filter((planet) => (
-        parseFloat(
-          planet[numeric.column],
-        ) > parseFloat(numeric.value)
-      )));
-    case 'menor que':
-      return callback(filter.filter((planet) => (
-        parseFloat(
-          planet[numeric.column],
-        ) < parseFloat(numeric.value)
-      )));
-    case 'igual a':
-      return callback(filter.filter((planet) => (
-        parseFloat(
-          planet[numeric.column],
-        ) === parseFloat(numeric.value)
-      )));
-    default:
-      return 'Filtro vazio';
+    if (filterByNumericValues[0].column !== '') {
+      const planetsFilterList = filterByNumericValues.map((planet) => {
+        if (planet.comparison === 'maior que') {
+          return filterState.filter((item) => (
+            parseFloat(
+              item[planet.column],
+            ) > parseFloat(planet.value)
+          ));
+        }
+        if (planet.comparison === 'menor que') {
+          return filterState.filter((item) => (
+            parseFloat(
+              item[planet.column],
+            ) < parseFloat(planet.value)
+          ));
+        }
+        return filterState.filter((item) => (
+          parseFloat(
+            item[planet.column],
+          ) === parseFloat(planet.value)
+        ));
+      });
+      return callback(planetsFilterList[planetsFilterList.length - 1]);
     }
-  }, [filterByNumericValues, callback, data, numeric]);
+    return callback(data);
+  },
+  [callback, data, filterByNumericValues, filterByNumericValues.length]);
 };
-
 export const useRemoveFiltersValus = (callback) => {
   const { filterByNumericValues } = useContext(starWarsContext);
   useEffect(() => callback(filterByNumericValues), [callback, filterByNumericValues]);

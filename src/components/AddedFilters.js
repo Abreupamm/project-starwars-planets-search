@@ -29,7 +29,7 @@ function AddedFilters() {
         {numbersValues.map((item, index) => (
           <div key={ index }>
             <span data-testid="filter" className="filter">
-              {`${item.column} ${item.comparison} ${item.value} ${index}`}
+              {`${item.column} ${item.comparison} ${item.value} `}
               {' '}
               <button
                 name={ item.column }
